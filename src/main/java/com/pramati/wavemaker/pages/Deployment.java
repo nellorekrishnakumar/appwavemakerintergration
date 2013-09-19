@@ -100,7 +100,9 @@ public class Deployment extends BasePage{
 	 * 
 	 * Both OK And cancel are displayed in window.
 	 * 
-	 * This should be used after clikcing on Deply Now button
+	 * This should be used after clicking on Deply Now button
+	 * 
+	 * This will wait till deployment happen 
 	 * 
 	 */
 	public String clickCloudAccountOkBtn(String username,String password){
@@ -108,7 +110,8 @@ public class Deployment extends BasePage{
 		waitForElementLocatedByID(CONFIRM_OK_BTN, getTimeOutInSeconds());
 		log.info("In Deployment page, Waiting for element located by id "+ CONFIRM_OK_BTN);
 		basePage.getElementByID(CONFIRM_OK_BTN).click();
-		setUserPassword(username, password);		
+		setUserPassword(username, password);
+		waitForElementToDisableByID("studio_progressDialog_titleBar");
 		return basePage.getElementByCSS(ALERT_TEXT).getText();
 	}
 
