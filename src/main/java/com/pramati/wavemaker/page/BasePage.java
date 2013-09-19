@@ -2,6 +2,7 @@ package com.pramati.wavemaker.page;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -32,6 +33,9 @@ import com.pramati.wavemaker.util.ConfigProperties;
  */
 
 public class BasePage extends DriverManager{
+	
+	private static final String  PROGRESS_DIALOG = "studio_saveDialogLabel";
+	private static final String  PROGRESS_ERRORTEXT = "wmSizeNode";
 
 	private static WebDriver driver = null;
 	private Alert alert = null;
@@ -1097,17 +1101,31 @@ public class BasePage extends DriverManager{
 	 * 
 	 * @param iD
 	 */
-	public void waitForElementToDisableByID(String iD){
+	public List<String> waitForElementToDisableByID(String iD){
 		log.info("Waiting for element to enable by class for id " +iD);
+		String progressTxt = null;
+		List<String> idText = new ArrayList<String>();
 		WebElement idEle = driver.findElement(By.id(iD));
+		idText.add(idEle.getText());		
+		
+		log.info("Got text :" + idEle.getText());
 		while (idEle.getText().isEmpty()) {			
 			idEle = driver.findElement(By.id(iD));
+			
 		}
 		
 		while (!idEle.getText().isEmpty()) {			
 			idEle = driver.findElement(By.id(iD));
+			try {
+				progressTxt = driver.findElement(By.id(PROGRESS_DIALOG)).findElement(By.className(PROGRESS_ERRORTEXT)).getText();
+				idText.add(progressTxt);
+			} catch (Exception e) {
+				log.error("progress text is not displayed in this case for search of "+PROGRESS_DIALOG);		
+			}
 		}
 		log.info("Element is enabled for class id " +iD);
+		log.info("Got all text of displayed in window "+idText);
+		return idText;
 	}
 	
 	

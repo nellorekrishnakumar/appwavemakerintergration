@@ -1,5 +1,9 @@
 package com.pramati.wavemaker.pages;
 
+
+
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -56,6 +60,10 @@ public class Deployment extends BasePage{
 	private static final String DEPLOYMENT_INPUT ="input";
 	private static final String DEPLOYMENT_ROLE = "div[role='presentation'";
 
+
+	// Displayed after clicking of Deploy Now button.This is progress bar
+	private static final String DIALOGTITLEBAR = "studio_progressDialog_titleBar"; 
+
 	BasePage basePage = new BasePage();
 
 
@@ -70,6 +78,13 @@ public class Deployment extends BasePage{
 		waitForElementLocatedByID(WAVEMAKER_CLOUDACCOUNT, getTimeOutInSeconds());
 		log.info("In Deployment page, Waiting for element located by id "+ WAVEMAKER_CLOUDACCOUNT);
 		return basePage.getElementByID(WAVEMAKER_CLOUDACCOUNT);
+	}
+
+
+	public String getWaveMakerCloudAccount_CloudTargetTxt(){
+		//studio_deploymentDialog_deploymentDialog_loginDialogTargetEditor
+		WebElement cloudTargetEle = Deployment().findElement(By.id("studio_deploymentDialog_deploymentDialog_loginDialogTargetEditor"));
+		return cloudTargetEle.findElement(By.className("wmeditor-readonlyNode")).getText();
 	}
 
 	/**
@@ -105,13 +120,33 @@ public class Deployment extends BasePage{
 	 * This will wait till deployment happen 
 	 * 
 	 */
-	public String clickCloudAccountOkBtn(String username,String password){
+	public List<String> clickCloudAccountOkBtn(String username,String password){
 		log.info("In Deployment page, Waiting for element located by id "+ CONFIRM_OK_BTN);
 		waitForElementLocatedByID(CONFIRM_OK_BTN, getTimeOutInSeconds());
 		log.info("In Deployment page, Waiting for element located by id "+ CONFIRM_OK_BTN);
 		basePage.getElementByID(CONFIRM_OK_BTN).click();
 		setUserPassword(username, password);
-		waitForElementToDisableByID("studio_progressDialog_titleBar");
+		List<String> dialogText = waitForElementToDisableByID(DIALOGTITLEBAR); 
+		return dialogText;		
+	}
+
+
+	/**
+	 * Get Error deployment message. Displayed once more than 5 war file are deployed in cloud.
+	 * 
+	 * @return
+	 */
+	public String alertErrorDeploying(){
+		return basePage.getElementByID("app_alertDialog").findElement(By.id("app_alertDialog_userQuestionLabel"))
+				.findElement(By.className("wmSizeNode")).getText();
+	}
+
+	/**
+	 * Get Link text of deployment page. Displayed Once successful deployment is done.
+	 * 
+	 * @return
+	 */
+	public String alertGetLinkTextOfDeployment(){ 
 		return basePage.getElementByCSS(ALERT_TEXT).getText();
 	}
 
@@ -182,6 +217,7 @@ public class Deployment extends BasePage{
 	 */
 	public String getDeploymentAPPURL(){
 		log.info("In Deployment page, Get's the deployment APP URL text from setting window of deployment page from css "+ DEPLOYMENT_URL_TEXT);
+		basePage.sleep(5000);
 		return getSettingWindowEle().findElement(By.id(DEPLOYMENT_URL)).findElement(By.cssSelector(DEPLOYMENT_URL_TEXT)).getText();
 	} 
 

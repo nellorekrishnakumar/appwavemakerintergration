@@ -4,7 +4,8 @@
 	preserve-order="true">
 	<test name="Sample Test Demonstrating testNG flow">
 		<classes>
-			<class name="com.pramati.wavemaker.test.WaveMakerTestCase" />			
+			<class name="com.pramati.wavemaker.test.WaveMakerTestCase" />
+			<class name="com.pramati.wavemaker.test.WaveMakerMaxWarUploadError"></class>			
 		</classes>
 	</test>
 
