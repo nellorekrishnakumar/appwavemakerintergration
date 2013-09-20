@@ -12,7 +12,7 @@ public class BaseTest {
 
 	@BeforeMethod(alwaysRun = true)
 	public void runBeforeMethod() {
-		homePage = new WelcomeStudio();
+		homePage = new WelcomeStudio();		
 	}
 
 	@AfterMethod(alwaysRun = true)

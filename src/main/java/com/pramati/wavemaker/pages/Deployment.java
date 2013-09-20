@@ -62,7 +62,10 @@ public class Deployment extends BasePage{
 
 
 	// Displayed after clicking of Deploy Now button.This is progress bar
-	private static final String DIALOGTITLEBAR = "studio_progressDialog_titleBar"; 
+	private static final String DIALOGTITLEBAR = "studio_progressDialog_titleBar";
+	
+	private static final String WAVEMAKER_CLOUDACCOUNTDIALOG = "studio_deploymentDialog_deploymentDialog_loginDialogTargetEditor";
+	private static final String WAVEMAKER_CLOUDACCOUNT_TARGETURL = "wmeditor-readonlyNode";
 
 	BasePage basePage = new BasePage();
 
@@ -80,11 +83,15 @@ public class Deployment extends BasePage{
 		return basePage.getElementByID(WAVEMAKER_CLOUDACCOUNT);
 	}
 
-
-	public String getWaveMakerCloudAccount_CloudTargetTxt(){
-		//studio_deploymentDialog_deploymentDialog_loginDialogTargetEditor
-		WebElement cloudTargetEle = Deployment().findElement(By.id("studio_deploymentDialog_deploymentDialog_loginDialogTargetEditor"));
-		return cloudTargetEle.findElement(By.className("wmeditor-readonlyNode")).getText();
+	/**
+	 * Gets the Wavemaker Cloud Account's Cloud Target text
+	 * 
+	 * @return
+	 */
+	public String getWaveMakerCloudAccount_CloudTargetTxt(){		
+		WebElement cloudTargetEle = Deployment().findElement(By.id(WAVEMAKER_CLOUDACCOUNTDIALOG));
+		log.info("In Deployment page, Got wavemaker cloud account dialog window, Target url text "+cloudTargetEle.findElement(By.className(WAVEMAKER_CLOUDACCOUNT_TARGETURL)).getText());
+		return cloudTargetEle.findElement(By.className(WAVEMAKER_CLOUDACCOUNT_TARGETURL)).getText();		
 	}
 
 	/**
@@ -123,10 +130,12 @@ public class Deployment extends BasePage{
 	public List<String> clickCloudAccountOkBtn(String username,String password){
 		log.info("In Deployment page, Waiting for element located by id "+ CONFIRM_OK_BTN);
 		waitForElementLocatedByID(CONFIRM_OK_BTN, getTimeOutInSeconds());
-		log.info("In Deployment page, Waiting for element located by id "+ CONFIRM_OK_BTN);
+		log.info("In Deployment page, clicking on element located by id "+ CONFIRM_OK_BTN+" this is clicked on confirm dialog ok button");
 		basePage.getElementByID(CONFIRM_OK_BTN).click();
 		setUserPassword(username, password);
+		log.info("In Deployment page, Username and password is set "+ CONFIRM_OK_BTN);		
 		List<String> dialogText = waitForElementToDisableByID(DIALOGTITLEBAR); 
+		log.info("In Deployment page, Getting Deployment dialog text, got text "+ dialogText);
 		return dialogText;		
 	}
 
@@ -137,6 +146,9 @@ public class Deployment extends BasePage{
 	 * @return
 	 */
 	public String alertErrorDeploying(){
+		log.info("In Deployment page, Getting error deploying text. ");		
+		log.info("In Deployment page, Getting Deployment dialog text, got text "+ basePage.getElementByID("app_alertDialog").findElement(By.id("app_alertDialog_userQuestionLabel"))
+				.findElement(By.className("wmSizeNode")).getText());
 		return basePage.getElementByID("app_alertDialog").findElement(By.id("app_alertDialog_userQuestionLabel"))
 				.findElement(By.className("wmSizeNode")).getText();
 	}
@@ -146,12 +158,15 @@ public class Deployment extends BasePage{
 	 * 
 	 * @return
 	 */
-	public String alertGetLinkTextOfDeployment(){ 
+	public String alertGetLinkTextOfDeployment(){
+		log.info("In Deployment page, Getting Deployment dialog text, got link text "+ basePage.
+				getElementByCSS(ALERT_TEXT).getText());
 		return basePage.getElementByCSS(ALERT_TEXT).getText();
 	}
 
 	/**
 	 * Click on Wavemaker Cloud Account Cancel button
+	 * 
 	 * Both OK And cancel are displayed in window.
 	 * 
 	 * This should be used after clicking on Deply Now button
@@ -161,7 +176,7 @@ public class Deployment extends BasePage{
 		waitForElementLocatedByID(CONFIRM_OK_BTN, getTimeOutInSeconds());
 		log.info("In Deployment page, Getting element located by id "+ CONFIRM_OK_BTN);
 		basePage.getElementByID(CONFIRM_OK_BTN).click();
-		log.info("In Deployment page, Finding element located by id "+ CJCANCELBTN  + "clicking");
+		log.info("In Deployment page, Clicking on cancel button, Finding element located by id "+ CJCANCELBTN  + "clicking");
 		Deployment().findElement(By.id(CJCANCELBTN)).click();
 	}
 

@@ -80,7 +80,7 @@ public class WaveMakerTestCase extends BaseTest {
 
 	@Test(enabled=true, dependsOnMethods="testSuccesfullDeploymentAPP")	
 	public void verifyAppUndeploy(){
-		//projectName = "PorjectA570";
+		
 		homePage.openExistingProject(projectName);
 		projectCreationPage = new ProjectCreationPage();
 		projectCreationPage.clickMenuBar("File","Deploy Project");
@@ -90,14 +90,12 @@ public class WaveMakerTestCase extends BaseTest {
 		deployment.clickManageWMCloudApBtn();
 		cloudJeeApplication = new CloudJeeApplication();
 		deployment.setUserPassword(ConfigProperties.USERNAME, ConfigProperties.PASSWORD);
-		cloudJeeApplication.changeAPPStatus("ProjectA570", START);
-		Assert.assertEquals(cloudJeeApplication.getAPPStatus("ProjectA570"),"STARTED","App is not stopped");
-		cloudJeeApplication.changeAPPStatus("ProjectA570", STOP);
-		Assert.assertEquals(cloudJeeApplication.getAPPStatus("ProjectA570"),"STOPPED","App is not started");
-		cloudJeeApplication.changeAPPStatus("ProjectA570", START);		
-		Assert.assertEquals(cloudJeeApplication.getAPPStatus("ProjectA570"),"STARTED","App is not stopped");
-		cloudJeeApplication.changeAPPStatus("ProjectA570", STOP);
-		Assert.assertEquals(cloudJeeApplication.getAPPStatus("ProjectA570"),"STOPPED","App is not started");		
+		
+		cloudJeeApplication.changeAPPStatus(projectName, STOP);
+		Assert.assertEquals(cloudJeeApplication.getAPPStatus(projectName),"STOPPED","App is not started");
+		cloudJeeApplication.changeAPPStatus(projectName, START);		
+		Assert.assertEquals(cloudJeeApplication.getAPPStatus(projectName),"STARTED","App is not stopped");
+				
 		cloudJeeApplication.changeAPPStatus(projectName, UNDEPLOY);		
 		Assert.assertNull(cloudJeeApplication.getAPPStatus(projectName),"App not successfully undeployed");		
 		
