@@ -57,9 +57,16 @@ public class DriverManager {
 	 * @return The driver object
 	 */
 	public static WebDriver getDriver() {
-		String browser = System.getProperty("browser");
-		
-		if (browser.equalsIgnoreCase(CHROME)) {
+		String browser = ConfigProperties.BROWSER;
+
+		if (browser.equalsIgnoreCase(FIREFOX)) {
+
+			log.info("initializing 'firefox' driver...");
+			driver = new FirefoxDriver();
+
+		}
+
+		else if (browser.equalsIgnoreCase(CHROME)) {
 
 			if (isPlatformWindows())
 				System.setProperty("webdriver.chrome.driver", driverLoc
@@ -107,15 +114,6 @@ public class DriverManager {
 			driver = new HtmlUnitDriver();
 
 		}
-		
-		else {			
-
-				log.info("initializing 'firefox' driver...");
-				driver = new FirefoxDriver();
-
-			}
-
-	
 
 		return driver;
 	}
