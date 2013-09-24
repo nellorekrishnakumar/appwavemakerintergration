@@ -15,13 +15,11 @@ public class ConfigProperties {
 
 	// Browser Configuration
 	public static final String URL;
+	public static final String HUBURL;
 	public static final String BROWSER;
 	public static final String COREDRIVERLOC;
 	public static final String TIMEOUT;
-	public static final String USERNAME;
-	public static final String PASSWORD;
-	public static final String PROJECTNAME;
-	public static final String DEPLOYMENT_URL;
+	
 	
 	private static Logger log = Logger.getLogger(ConfigProperties.class);
 	
@@ -42,17 +40,10 @@ public class ConfigProperties {
 		TIMEOUT = properties.getProperty("timeout");
 		log.info("Got timeout value from property file "+ TIMEOUT);
 		
-		USERNAME = properties.getProperty("cloudJeeUsername");
-		log.info("Got Cloudjee Username value from property file "+ USERNAME);
+		HUBURL = properties.getProperty("huburl");
+		log.info("Got hub url value from property file "+ HUBURL);
 		
-		PASSWORD = properties.getProperty("cloudJeePassword");
-		log.info("Got Cloudjee Password value from property file "+ PASSWORD);
 		
-		PROJECTNAME = properties.getProperty("projectName");
-		log.info("Got Cloudjee project name value from property file "+ PROJECTNAME);
-		
-		DEPLOYMENT_URL = properties.getProperty("deploymentUrl");
-		log.info("Got Cloudjee deployment url value from property file "+ DEPLOYMENT_URL);
 	}
 
 	public static void init() {
