@@ -5,7 +5,7 @@
 	<artifactId>cloudjeewavemakerintegration</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<description>CloudJee and wavemaker integration</description>
-	<dependencies>		
+	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
@@ -20,12 +20,12 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>6.8.5</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.uncommons</groupId>
 			<artifactId>reportng</artifactId>
@@ -36,6 +36,11 @@
 					<artifactId>testng</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>3.0</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
@@ -64,21 +69,22 @@
 						</property>
 						<property>
 							<name>listener</name>
-							<value>com.pramati.wavemaker.util.GenericReportNGListener,org.uncommons.reportng.HTMLReporter, org.uncommons.reportng.JUnitXMLReporter</value>
+							<value>org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter,com.pramati.wavemaker.util.GenericReportNGListener</value><!-- 
+								,org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter</value> -->
 						</property>
 						<property>
-             			    <name>outputDir</name>
-            			    <value>target/surefire-reports/html</value>
-           				 </property>
+							<name>outputDir</name>
+							<value>target/surefire-reports/html</value>
+						</property>
 						<property>
 							<name>reporter</name>
 							<value>listenReport.Reporter</value>
 						</property>
 					</properties>
-					<!-- <workingDirectory>target/surefire-reports/html/</workingDirectory> -->
+					<reportsDirectory>${project.basedir}/target/</reportsDirectory>
 					<systemPropertyVariables>
-                    <org.uncommons.reportng.escape-output>false</org.uncommons.reportng.escape-output>
-                </systemPropertyVariables>
+						<org.uncommons.reportng.escape-output>false</org.uncommons.reportng.escape-output>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -25,6 +25,8 @@ public class APPLoginTestCase extends AppBaseTest {
 	public void testInvalidLogin() throws InterruptedException {
 		homePage.setUserName(UserPass.INVALIDEMAIL_MINIMUMCHARACTERPASSWORD.username());
 		homePage.setPassword(UserPass.INVALIDEMAIL_MINIMUMCHARACTERPASSWORD.password());
+		ScreenShotRemoteWebDriver sc = new ScreenShotRemoteWebDriver();
+		sc.takeScreenshot("Krishnahi");
 		homePage.clickSignInBtn();
 		List<String> error = homePage.getError();
 		Assert.assertTrue(error.contains(UserPass.INVALIDEMAIL_MINIMUMCHARACTERPASSWORD.emailErr()), UserPass.INVALIDEMAIL_MINIMUMCHARACTERPASSWORD.emailErr() +" is not displayed in "+ error);
@@ -66,8 +68,8 @@ public class APPLoginTestCase extends AppBaseTest {
 		homePage.clickSignInBtn();
 		List<String> error = homePage.getError();
 		Assert.assertTrue(error.contains(UserPass.EMPTYEMAIL_SHORTPASSWORD.emailErr()), UserPass.EMPTYEMAIL_SHORTPASSWORD.emailErr() +" is not displayed in "+ error);		
-	}
-	*/
+	}*/
+	
 	
 	@Test(description="Check valid email and valid password")
 	public void testValidEmailAndValidPassword() throws InterruptedException {
@@ -79,14 +81,14 @@ public class APPLoginTestCase extends AppBaseTest {
 		appsGroupPage = new AppsGroupPage();
 		appsGroupPage.clickUsernameLink("Account Settings");
 		Map<String, String> accountDetail = appsGroupPage.getProfileDetail();
-		Assert.assertEquals(accountDetail.get(AccountDetail.USERNAME.key()), AccountDetail.USERNAME.value(),AccountDetail.USERNAME.value() +"Not found in Account detail page");
-		Assert.assertEquals(accountDetail.get(AccountDetail.FULLNAME.key()), AccountDetail.FULLNAME.value(),AccountDetail.FULLNAME.value() +"Not found in Account detail page");
-		Assert.assertEquals(accountDetail.get(AccountDetail.EMAIL.key()), AccountDetail.EMAIL.value(),AccountDetail.EMAIL.value() +"Not found in Account detail page");
-		Assert.assertEquals(accountDetail.get(AccountDetail.COMPANY.key()), AccountDetail.COMPANY.value(),AccountDetail.COMPANY.value() +"Not found in Account detail page");
-		Assert.assertEquals(accountDetail.get(AccountDetail.APPDOMAINNAME.key()), AccountDetail.APPDOMAINNAME.value(),AccountDetail.APPDOMAINNAME.value() +"Not found in Account detail page");
-		Assert.assertEquals(accountDetail.get(AccountDetail.SUBSCRIPTIONTYPE.key()), AccountDetail.SUBSCRIPTIONTYPE.value(),AccountDetail.SUBSCRIPTIONTYPE.value() +"Not found in Account detail page");
-		Assert.assertEquals(accountDetail.get(AccountDetail.COUNTRY.key()), AccountDetail.COUNTRY.value(),AccountDetail.COUNTRY.value() +"Not found in Account detail page");
-		Assert.assertEquals(accountDetail.get(AccountDetail.TELEPHONENUMBER.key()), AccountDetail.TELEPHONENUMBER.value(),AccountDetail.TELEPHONENUMBER.value() +"Not found in Account detail page");
+		Assert.assertEquals(accountDetail.get(AccountDetail.USERNAME.key()), AccountDetail.USERNAME.value(),AccountDetail.USERNAME.value() +" Not found in Account detail page");
+		Assert.assertEquals(accountDetail.get(AccountDetail.FULLNAME.key()), AccountDetail.FULLNAME.value(),AccountDetail.FULLNAME.value() +" Not found in Account detail page");
+		Assert.assertEquals(accountDetail.get(AccountDetail.EMAIL.key()), AccountDetail.EMAIL.value(),AccountDetail.EMAIL.value() +" Not found in Account detail page");
+		Assert.assertEquals(accountDetail.get(AccountDetail.COMPANY.key()), AccountDetail.COMPANY.value(),AccountDetail.COMPANY.value() +" Not found in Account detail page");
+		Assert.assertEquals(accountDetail.get(AccountDetail.APPDOMAINNAME.key()), AccountDetail.APPDOMAINNAME.value(),AccountDetail.APPDOMAINNAME.value() +" Not found in Account detail page");
+		Assert.assertEquals(accountDetail.get(AccountDetail.SUBSCRIPTIONTYPE.key()), AccountDetail.SUBSCRIPTIONTYPE.value(),AccountDetail.SUBSCRIPTIONTYPE.value() +" Not found in Account detail page");
+		Assert.assertEquals(accountDetail.get(AccountDetail.COUNTRY.key()), AccountDetail.COUNTRY.value(),AccountDetail.COUNTRY.value() +" Not found in Account detail page");
+		Assert.assertEquals(accountDetail.get(AccountDetail.TELEPHONENUMBER.key()), AccountDetail.TELEPHONENUMBER.value(),AccountDetail.TELEPHONENUMBER.value() +" Not found in Account detail page");
 		
 		appsGroupPage.clickLeftTab("Admin Portal");
 		adminportal = appsGroupPage.new AppsAdminPortal();

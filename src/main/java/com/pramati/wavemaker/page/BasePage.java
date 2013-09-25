@@ -22,6 +22,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.pramati.wavemaker.util.ConfigProperties;
+import com.pramati.wavemaker.util.BaseRemoteWebDriver;
 
 /**
  * BasePage is the class that all other page classes should extend for web-based
@@ -36,7 +37,7 @@ public class BasePage extends DriverManager{
 	private static final String  PROGRESS_DIALOG = "studio_saveDialogLabel";
 	private static final String  PROGRESS_ERRORTEXT = "wmSizeNode";
 
-	private static WebDriver driver = null;
+	private static BaseRemoteWebDriver driver = null;
 	private Alert alert = null;
 
 	private static Logger log = Logger.getLogger(BasePage.class);
@@ -975,7 +976,7 @@ public class BasePage extends DriverManager{
 		log.info("Checking active ajax calls by calling jquery.active");
 		try {
 			if (driver instanceof JavascriptExecutor) {
-				JavascriptExecutor jsDriver = (JavascriptExecutor) driver;
+				JavascriptExecutor jsDriver = driver;
 
 				for (int i = 0; i < timeoutInSeconds; i++) {
 					Object numberOfAjaxConnections = jsDriver

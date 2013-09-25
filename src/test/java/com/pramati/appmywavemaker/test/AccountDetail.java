@@ -7,7 +7,7 @@ public enum AccountDetail {
 	EMAIL ("Email", "krishnakumar.nellore@imaginea.com"),
 	COMPANY ("Company", "imaginea"),
 	APPDOMAINNAME ("App Domain Name", "krishna.apps.mywavemaker.com"),
-	SUBSCRIPTIONTYPE ("Subscription Type", "Free"),
+	SUBSCRIPTIONTYPE ("Subscription Type", "FREE"),
 	COUNTRY ("Country", "India"),
 	TELEPHONENUMBER ("Telephone Number", "91908900808");
 

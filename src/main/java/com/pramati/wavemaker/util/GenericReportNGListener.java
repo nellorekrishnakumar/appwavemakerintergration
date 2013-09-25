@@ -24,8 +24,10 @@ import org.testng.TestListenerAdapter;
 public class GenericReportNGListener extends TestListenerAdapter {
 
 	private int count = 0;
+	
 	private static Logger log = Logger.getLogger(GenericReportNGListener.class);
-
+	
+	
 	@Override
 	public void onTestFailure(ITestResult result) {
 
@@ -66,12 +68,14 @@ public class GenericReportNGListener extends TestListenerAdapter {
 
 			if (status.equals("SKIPPED")) {
 				if (count == 0) {// take only one screenshot
-					ScreenshotCapture.takeScreenshot(testName + timestamp);
+					new ScreenshotCapture().takeRemoteScreenshot(testName + timestamp);
+					
 					count++;
 				}
 			} else
-				ScreenshotCapture.takeScreenshot(testName + timestamp);
-
+				new ScreenshotCapture().takeRemoteScreenshot(testName + timestamp);
+			
+			
 			Reporter.setCurrentTestResult(result);
 
 			Object[] parameters = result.getParameters();

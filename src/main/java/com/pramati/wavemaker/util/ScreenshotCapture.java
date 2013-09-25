@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
+import com.pramati.wavemaker.page.DriverManager;
+
 /**
  * This class gives functionality to capture screenshot of the entire screen
  * 
@@ -22,10 +24,11 @@ public class ScreenshotCapture {
 
 	private final static String SCREENSHOTS_DIR = "screenshots";
 	private static String imgLoc = null;
-	private static File  screenShotFile = null;
+	public static File  screenShotFile = null;
+	BaseRemoteWebDriver sc ;
 
 	private static Logger log = Logger.getLogger(ScreenshotCapture.class);
-	
+
 	static {
 		try {			
 			screenShotFile = new File("./target/"+SCREENSHOTS_DIR); 	// Creating Screen Shot in target directory.
@@ -101,6 +104,19 @@ public class ScreenshotCapture {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Takes a screen shot of the full screen in <code>png</code> format with
+	 * the name specified by <code>fileName</code>
+	 * 
+	 * @param fileName
+	 */
+	public void takeRemoteScreenshot(String fileName) {
+
+		sc = DriverManager.getDriver();
+		sc.takeScreenshot(imgLoc + fileName + ".png");
+	}
+
 
 	/**
 	 * Takes a screen shot of the full screen in specified

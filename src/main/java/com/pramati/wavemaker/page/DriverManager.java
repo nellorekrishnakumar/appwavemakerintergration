@@ -8,14 +8,13 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import com.pramati.wavemaker.util.ConfigProperties;
+import com.pramati.wavemaker.util.BaseRemoteWebDriver;
 
 
 /**
@@ -33,7 +32,7 @@ public class DriverManager {
 	public static final String CHROME = "chrome";
 	public static final String SAFARI = "safari";
 
-	private static WebDriver driver = null;
+	private static BaseRemoteWebDriver driver = null;
 	private static String driverLoc = null;
 	private static Logger log = Logger.getLogger(DriverManager.class);
 
@@ -54,8 +53,9 @@ public class DriverManager {
 	 * 
 	 * @return The driver object
 	 */
-	public static WebDriver getDriver() {
+	public static final BaseRemoteWebDriver getDriver() {
 		String browser = ConfigProperties.BROWSER;
+		if(driver==null){
 
 		if (browser.equalsIgnoreCase(FIREFOX)) {
 
@@ -64,7 +64,7 @@ public class DriverManager {
 			capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			try {
 				
-				driver = new RemoteWebDriver(new URL(ConfigProperties.HUBURL), capabilities);
+				driver = new BaseRemoteWebDriver(new URL(ConfigProperties.HUBURL), capabilities);
 				//driver = new RemoteWebDriver("http://localhost:9515", DesiredCapabilities.chrome());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -89,7 +89,7 @@ public class DriverManager {
 			DesiredCapabilities capabilities = DesiredCapabilities.chrome();			
 			capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			try {
-				driver = new RemoteWebDriver(new URL(ConfigProperties.HUBURL), capabilities);
+				driver = new BaseRemoteWebDriver(new URL(ConfigProperties.HUBURL), capabilities);
 				//driver = new RemoteWebDriver("http://localhost:9515", DesiredCapabilities.chrome());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -109,7 +109,7 @@ public class DriverManager {
 					+ "IEDriverServer.exe");
 
 			try {
-				driver = new RemoteWebDriver(new URL(ConfigProperties.HUBURL), capabilities);
+				driver = new BaseRemoteWebDriver(new URL(ConfigProperties.HUBURL), capabilities);
 				//driver = new RemoteWebDriver("http://localhost:9515", DesiredCapabilities.chrome());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -127,7 +127,7 @@ public class DriverManager {
 			DesiredCapabilities capabilities = DesiredCapabilities.safari();			
 			capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			try {
-				driver = new RemoteWebDriver(new URL(ConfigProperties.HUBURL), capabilities);
+				driver = new BaseRemoteWebDriver(new URL(ConfigProperties.HUBURL), capabilities);
 				//driver = new RemoteWebDriver("http://localhost:9515", DesiredCapabilities.chrome());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -139,8 +139,9 @@ public class DriverManager {
 		else if (browser.equalsIgnoreCase("html")) {
 
 			log.info("initializing 'html' driver...");
-			driver = new HtmlUnitDriver();
+			//driver = new HtmlUnitDriver();
 
+		}
 		}
 		return driver;
 	}
